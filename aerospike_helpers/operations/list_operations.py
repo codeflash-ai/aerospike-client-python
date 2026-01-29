@@ -589,21 +589,43 @@ def list_get_by_rank_range(bin_name: str, rank, return_type, count=None, inverte
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {
+    if count is None:
+        if ctx:
+            return {
+                OP_KEY: aerospike.OP_LIST_GET_BY_RANK_RANGE,
+                BIN_KEY: bin_name,
+                RETURN_TYPE_KEY: return_type,
+                RANK_KEY: rank,
+                INVERTED_KEY: inverted,
+                CTX_KEY: ctx,
+            }
+        return {
+            OP_KEY: aerospike.OP_LIST_GET_BY_RANK_RANGE,
+            BIN_KEY: bin_name,
+            RETURN_TYPE_KEY: return_type,
+            RANK_KEY: rank,
+            INVERTED_KEY: inverted,
+        }
+    
+    if ctx:
+        return {
+            OP_KEY: aerospike.OP_LIST_GET_BY_RANK_RANGE,
+            BIN_KEY: bin_name,
+            RETURN_TYPE_KEY: return_type,
+            RANK_KEY: rank,
+            INVERTED_KEY: inverted,
+            COUNT_KEY: count,
+            CTX_KEY: ctx,
+        }
+    
+    return {
         OP_KEY: aerospike.OP_LIST_GET_BY_RANK_RANGE,
         BIN_KEY: bin_name,
         RETURN_TYPE_KEY: return_type,
         RANK_KEY: rank,
         INVERTED_KEY: inverted,
+        COUNT_KEY: count,
     }
-
-    if count is not None:
-        op_dict[COUNT_KEY] = count
-
-    if ctx:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
 
 
 def list_get_by_value(bin_name: str, value, return_type, inverted=False, ctx: Optional[list] = None):
