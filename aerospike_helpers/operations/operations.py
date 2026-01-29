@@ -25,6 +25,7 @@ import aerospike
 from typing import Optional
 
 from aerospike_helpers.cdt_ctx import _cdt_ctx
+from aerospike import OPERATOR_READ
 
 
 def read(bin_name):
@@ -39,7 +40,7 @@ def read(bin_name):
     """
 
     return {
-        "op": aerospike.OPERATOR_READ,
+        "op": OPERATOR_READ,
         "bin": bin_name,
     }
 
