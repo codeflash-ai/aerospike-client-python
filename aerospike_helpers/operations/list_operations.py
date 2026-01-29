@@ -31,6 +31,8 @@ See this `page <https://aerospike.com/docs/develop/data-types/collections/list#l
 import aerospike
 from typing import Optional
 
+_OP_LIST_GET_BY_VALUE_LIST = aerospike.OP_LIST_GET_BY_VALUE_LIST
+
 
 OP_KEY = "op"
 BIN_KEY = "bin"
@@ -659,18 +661,23 @@ def list_get_by_value_list(bin_name: str, value_list, return_type, inverted=Fals
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {
-        OP_KEY: aerospike.OP_LIST_GET_BY_VALUE_LIST,
+    if ctx:
+        return {
+            OP_KEY: _OP_LIST_GET_BY_VALUE_LIST,
+            BIN_KEY: bin_name,
+            RETURN_TYPE_KEY: return_type,
+            VALUE_LIST_KEY: value_list,
+            INVERTED_KEY: inverted,
+            CTX_KEY: ctx,
+        }
+    
+    return {
+        OP_KEY: _OP_LIST_GET_BY_VALUE_LIST,
         BIN_KEY: bin_name,
         RETURN_TYPE_KEY: return_type,
         VALUE_LIST_KEY: value_list,
         INVERTED_KEY: inverted,
     }
-
-    if ctx:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
 
 
 def list_get_by_value_range(
