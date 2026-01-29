@@ -27,6 +27,8 @@ Expression operations support reading and writing the result of Aerospike expres
 import aerospike
 from aerospike_helpers.expressions import resources
 
+_OP_EXPR_WRITE = aerospike.OP_EXPR_WRITE
+
 
 OP_KEY = "op"
 BIN_KEY = "bin"
@@ -110,7 +112,7 @@ def expression_write(bin_name: str, expression: resources._BaseExpr, expression_
     """
 
     op_dict = {
-        OP_KEY: aerospike.OP_EXPR_WRITE,
+        OP_KEY: _OP_EXPR_WRITE,
         BIN_KEY: bin_name,
         EXPR_KEY: expression,
         EXPR_FLAGS_KEY: expression_write_flags,
