@@ -26,6 +26,8 @@ from typing import Optional
 
 from aerospike_helpers.cdt_ctx import _cdt_ctx
 
+_TOUCH_OP_DICT = {"op": aerospike.OPERATOR_TOUCH}
+
 
 def read(bin_name):
     """Create a read operation dictionary.
@@ -128,11 +130,10 @@ def touch(ttl: Optional[int] = None):
     Returns:
         A dictionary to be passed to operate or operate_ordered.
     """
-    op_dict = {"op": aerospike.OPERATOR_TOUCH}
     if ttl:
         warnings.warn("TTL should be specified in the meta dictionary for operate", DeprecationWarning)
-        op_dict["val"] = ttl
-    return op_dict
+        return {"op": aerospike.OPERATOR_TOUCH, "val": ttl}
+    return _TOUCH_OP_DICT
 
 
 def select_by_path(bin_name: str, ctx: list[_cdt_ctx], flags: int):
