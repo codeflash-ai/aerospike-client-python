@@ -139,6 +139,8 @@ Example::
 """
 import aerospike
 
+_OP_BIT_RSHIFT = aerospike.OP_BIT_RSHIFT
+
 BIN_KEY = "bin"
 BYTE_SIZE_KEY = "byte_size"
 BYTE_OFFSET_KEY = "byte_offset"
@@ -563,7 +565,7 @@ def bit_rshift(bin_name: str, bit_offset, bit_size, shift, policy=None):
         format of the dictionary should be considered an internal detail, and subject to change.
     """
     return {
-        OP_KEY: aerospike.OP_BIT_RSHIFT,
+        OP_KEY: _OP_BIT_RSHIFT,
         BIN_KEY: bin_name,
         BIT_OFFSET_KEY: bit_offset,
         BIT_SIZE_KEY: bit_size,
