@@ -154,7 +154,7 @@ class _cdt_ctx:
     Class used to represent a single ctx_operation.
     """
 
-    def __init__(self, *, id=None, value=None, extra_args=None):
+    def __init__(self, id=None, value=None, extra_args=None):
         self.id = id
         self.value = value
         self.extra_args = extra_args
@@ -284,7 +284,7 @@ def cdt_ctx_map_value(value):
     Returns:
         :class:`~aerospike_helpers.cdt_ctx._cdt_ctx`
     """
-    return _cdt_ctx(id=aerospike.CDT_CTX_MAP_VALUE, value=value)
+    return _cdt_ctx(aerospike.CDT_CTX_MAP_VALUE, value)
 
 
 def cdt_ctx_map_key_create(key: any, order: int = 0) -> _cdt_ctx:
