@@ -159,6 +159,14 @@ class _cdt_ctx:
         self.value = value
         self.extra_args = extra_args
 
+    @classmethod
+    def _make(cls, id, value, extra_args=None):
+        inst = cls.__new__(cls)
+        inst.id = id
+        inst.value = value
+        inst.extra_args = extra_args
+        return inst
+
 
 def cdt_ctx_list_index(index):
     """
@@ -188,7 +196,7 @@ def cdt_ctx_list_rank(rank):
     Returns:
         :class:`~aerospike_helpers.cdt_ctx._cdt_ctx`
     """
-    return _cdt_ctx(id=aerospike.CDT_CTX_LIST_RANK, value=rank)
+    return _cdt_ctx._make(aerospike.CDT_CTX_LIST_RANK, rank)
 
 
 def cdt_ctx_list_value(value):
