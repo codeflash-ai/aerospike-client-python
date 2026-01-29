@@ -139,6 +139,8 @@ Example::
 """
 import aerospike
 
+_OP_BIT_RESIZE = aerospike.OP_BIT_RESIZE
+
 BIN_KEY = "bin"
 BYTE_SIZE_KEY = "byte_size"
 BYTE_OFFSET_KEY = "byte_offset"
@@ -175,7 +177,7 @@ def bit_resize(bin_name: str, byte_size, policy=None, resize_flags: int = 0):
         should be considered an internal detail, and subject to change.
     """
     return {
-        OP_KEY: aerospike.OP_BIT_RESIZE,
+        OP_KEY: _OP_BIT_RESIZE,
         BIN_KEY: bin_name,
         POLICY_KEY: policy,
         RESIZE_FLAGS_KEY: resize_flags,
