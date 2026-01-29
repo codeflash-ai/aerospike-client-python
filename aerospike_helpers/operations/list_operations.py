@@ -997,12 +997,11 @@ def list_set_order(bin_name: str, list_order, ctx: Optional[list] = None):
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`.The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {OP_KEY: aerospike.OP_LIST_SET_ORDER, BIN_KEY: bin_name, LIST_ORDER_KEY: list_order}
 
     if ctx:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
+        return {"op": aerospike.OP_LIST_SET_ORDER, "bin": bin_name, "list_order": list_order, "ctx": ctx}
+    
+    return {"op": aerospike.OP_LIST_SET_ORDER, "bin": bin_name, "list_order": list_order}
 
 
 def list_sort(bin_name: str, sort_flags: int = 0, ctx: Optional[list] = None):
