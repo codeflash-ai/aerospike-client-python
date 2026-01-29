@@ -103,6 +103,13 @@ Example::
 """
 import aerospike
 
+_INDEX_TYPE_STRINGS = {
+    aerospike.INDEX_TYPE_DEFAULT: "default",
+    aerospike.INDEX_TYPE_LIST: "list",
+    aerospike.INDEX_TYPE_MAPKEYS: "mapkeys",
+    aerospike.INDEX_TYPE_MAPVALUES: "mapvalues",
+}
+
 
 def index_type_string(index_type):
     """
@@ -115,15 +122,11 @@ def index_type_string(index_type):
         (string) - must be one of 'default', 'list', 'mapkeys', 'mapvalues'
 
     """
-    if index_type == aerospike.INDEX_TYPE_DEFAULT:
-        return "default"
-    if index_type == aerospike.INDEX_TYPE_LIST:
-        return "list"
-    if index_type == aerospike.INDEX_TYPE_MAPKEYS:
-        return "mapkeys"
-    if index_type == aerospike.INDEX_TYPE_MAPVALUES:
-        return "mapvalues"
-    return "invalid"
+    try:
+        mapping = _INDEX_TYPE_STRINGS
+        return mapping.get(index_type, "invalid")
+    except TypeError:
+        return "invalid"
 
 
 def index_datatype_string(index_datatype):
