@@ -480,11 +480,11 @@ def bit_not(bin_name: str, bit_offset, bit_size, policy=None):
         format of the dictionary should be considered an internal detail, and subject to change.
     """
     return {
-        OP_KEY: aerospike.OP_BIT_NOT,
-        BIN_KEY: bin_name,
-        BIT_OFFSET_KEY: bit_offset,
-        BIT_SIZE_KEY: bit_size,
-        POLICY_KEY: policy,
+        "op": aerospike.OP_BIT_NOT,
+        "bin": bin_name,
+        "bit_offset": bit_offset,
+        "bit_size": bit_size,
+        "policy": policy,
     }
 
 
