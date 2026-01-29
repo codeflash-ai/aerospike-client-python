@@ -139,6 +139,8 @@ Example::
 """
 import aerospike
 
+OP_BIT_SET_INT = aerospike.OP_BIT_SET_INT
+
 BIN_KEY = "bin"
 BYTE_SIZE_KEY = "byte_size"
 BYTE_OFFSET_KEY = "byte_offset"
@@ -252,7 +254,7 @@ def bit_set_int(bin_name: str, bit_offset: int, bit_size: int, value: int, polic
         should be considered an internal detail, and subject to change.
     """
     return {
-        OP_KEY: aerospike.OP_BIT_SET_INT,
+        OP_KEY: OP_BIT_SET_INT,
         BIN_KEY: bin_name,
         POLICY_KEY: policy,
         BIT_OFFSET_KEY: bit_offset,
