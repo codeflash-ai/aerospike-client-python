@@ -258,7 +258,13 @@ def cdt_ctx_map_rank(rank):
     Returns:
         :class:`~aerospike_helpers.cdt_ctx._cdt_ctx`
     """
-    return _cdt_ctx(id=aerospike.CDT_CTX_MAP_RANK, value=rank)
+    # Construct the instance without calling __init__ to avoid the function-call
+    # overhead of __init__ on this hot path; then assign the same attributes.
+    inst = _cdt_ctx.__new__(_cdt_ctx)
+    inst.id = aerospike.CDT_CTX_MAP_RANK
+    inst.value = rank
+    inst.extra_args = None
+    return inst
 
 
 def cdt_ctx_map_key(key):
