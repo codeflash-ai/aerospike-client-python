@@ -30,6 +30,7 @@ See this `page <https://aerospike.com/docs/develop/data-types/collections/list#l
 """
 import aerospike
 from typing import Optional
+from aerospike import OP_LIST_APPEND_ITEMS
 
 
 OP_KEY = "op"
@@ -127,7 +128,8 @@ def list_append_items(bin_name: str, values, policy: Optional[dict] = None, ctx:
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`.
         The format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {OP_KEY: aerospike.OP_LIST_APPEND_ITEMS, BIN_KEY: bin_name, VALUE_KEY: values}
+    op_dict = {OP_KEY: OP_LIST_APPEND_ITEMS, BIN_KEY: bin_name, VALUE_KEY: values}
+
 
     if policy:
         op_dict[LIST_POLICY_KEY] = policy
