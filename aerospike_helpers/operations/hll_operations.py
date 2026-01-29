@@ -101,6 +101,8 @@ Example::
 
 import aerospike
 
+_HLL_DESCRIBE_OP = aerospike.OP_HLL_DESCRIBE
+
 
 OP_KEY = "op"
 BIN_KEY = "bin"
@@ -151,12 +153,10 @@ def hll_describe(bin_name):
     Args:
         bin_name (str): The name of the bin to be operated on.
     """
-    op_dict = {
-        OP_KEY: aerospike.OP_HLL_DESCRIBE,
+    return {
+        OP_KEY: _HLL_DESCRIBE_OP,
         BIN_KEY: bin_name,
     }
-
-    return op_dict
 
 
 def hll_fold(bin_name: str, index_bit_count):
