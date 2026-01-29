@@ -31,6 +31,8 @@ See this `page <https://aerospike.com/docs/develop/data-types/collections/list#l
 import aerospike
 from typing import Optional
 
+_OP_LIST_REMOVE_BY_VALUE = aerospike.OP_LIST_REMOVE_BY_VALUE
+
 
 OP_KEY = "op"
 BIN_KEY = "bin"
@@ -890,15 +892,15 @@ def list_remove_by_value(bin_name: str, value, return_type, inverted=False, ctx:
         format of the dictionary should be considered an internal detail, and subject to change.
     """
     op_dict = {
-        OP_KEY: aerospike.OP_LIST_REMOVE_BY_VALUE,
-        BIN_KEY: bin_name,
-        RETURN_TYPE_KEY: return_type,
-        VALUE_KEY: value,
-        INVERTED_KEY: inverted,
+        "op": _OP_LIST_REMOVE_BY_VALUE,
+        "bin": bin_name,
+        "return_type": return_type,
+        "val": value,
+        "inverted": inverted,
     }
 
     if ctx:
-        op_dict[CTX_KEY] = ctx
+        op_dict["ctx"] = ctx
 
     return op_dict
 
