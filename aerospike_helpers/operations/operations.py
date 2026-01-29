@@ -26,6 +26,8 @@ from typing import Optional
 
 from aerospike_helpers.cdt_ctx import _cdt_ctx
 
+_OP_APPEND = aerospike.OPERATOR_APPEND
+
 
 def read(bin_name):
     """Create a read operation dictionary.
@@ -84,7 +86,7 @@ def append(bin_name, append_item):
     Returns:
         A dictionary to be passed to operate or operate_ordered.
     """
-    return {"op": aerospike.OPERATOR_APPEND, "bin": bin_name, "val": append_item}
+    return {"op": _OP_APPEND, "bin": bin_name, "val": append_item}
 
 
 def prepend(bin_name, prepend_item):
