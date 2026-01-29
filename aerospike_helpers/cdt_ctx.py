@@ -103,6 +103,8 @@ Example::
 """
 import aerospike
 
+_CDT_CTX_LIST_INDEX_CREATE = aerospike.CDT_CTX_LIST_INDEX_CREATE
+
 
 def index_type_string(index_type):
     """
@@ -224,8 +226,10 @@ def cdt_ctx_list_index_create(index: int, order: int = 0, pad: bool = False) -> 
     Returns:
         :class:`~aerospike_helpers.cdt_ctx._cdt_ctx`
     """
+    # Bind cached constant to a local name to reduce global lookups
+    ctx_id = _CDT_CTX_LIST_INDEX_CREATE
     return _cdt_ctx(
-        id=aerospike.CDT_CTX_LIST_INDEX_CREATE, value=index, extra_args={CDT_CTX_ORDER_KEY: order, CDT_CTX_PAD_KEY: pad}
+        id=ctx_id, value=index, extra_args={CDT_CTX_ORDER_KEY: order, CDT_CTX_PAD_KEY: pad}
     )
 
 
