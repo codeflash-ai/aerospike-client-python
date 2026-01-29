@@ -101,6 +101,8 @@ Example::
 
 import aerospike
 
+_OP_HLL_REFRESH_COUNT = aerospike.OP_HLL_REFRESH_COUNT
+
 
 OP_KEY = "op"
 BIN_KEY = "bin"
@@ -304,7 +306,7 @@ def hll_refresh_count(bin_name: str):
         bin_name (str): The name of the bin to be operated on.
     """
     op_dict = {
-        OP_KEY: aerospike.OP_HLL_REFRESH_COUNT,
+        OP_KEY: _OP_HLL_REFRESH_COUNT,
         BIN_KEY: bin_name,
     }
 
