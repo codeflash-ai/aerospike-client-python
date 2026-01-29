@@ -31,6 +31,8 @@ See this `page <https://aerospike.com/docs/develop/data-types/collections/list#l
 import aerospike
 from typing import Optional
 
+_OP_LIST_SET = aerospike.OP_LIST_SET
+
 
 OP_KEY = "op"
 BIN_KEY = "bin"
@@ -365,7 +367,7 @@ def list_set(bin_name: str, index, value, policy: Optional[dict] = None, ctx: Op
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {OP_KEY: aerospike.OP_LIST_SET, BIN_KEY: bin_name, INDEX_KEY: index, VALUE_KEY: value}
+    op_dict = {OP_KEY: _OP_LIST_SET, BIN_KEY: bin_name, INDEX_KEY: index, VALUE_KEY: value}
     if policy:
         op_dict[LIST_POLICY_KEY] = policy
 
