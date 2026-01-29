@@ -524,19 +524,45 @@ def list_get_by_index_range(bin_name: str, index, return_type, count=None, inver
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {
-        OP_KEY: aerospike.OP_LIST_GET_BY_INDEX_RANGE,
-        BIN_KEY: bin_name,
-        RETURN_TYPE_KEY: return_type,
-        INDEX_KEY: index,
-        INVERTED_KEY: inverted,
-    }
-
-    if count is not None:
-        op_dict[COUNT_KEY] = count
-
-    if ctx:
-        op_dict[CTX_KEY] = ctx
+    # Build the final dict in one construction to avoid subsequent mutations.
+    if count is None:
+        if ctx:
+            op_dict = {
+                OP_KEY: aerospike.OP_LIST_GET_BY_INDEX_RANGE,
+                BIN_KEY: bin_name,
+                RETURN_TYPE_KEY: return_type,
+                INDEX_KEY: index,
+                INVERTED_KEY: inverted,
+                CTX_KEY: ctx,
+            }
+        else:
+            op_dict = {
+                OP_KEY: aerospike.OP_LIST_GET_BY_INDEX_RANGE,
+                BIN_KEY: bin_name,
+                RETURN_TYPE_KEY: return_type,
+                INDEX_KEY: index,
+                INVERTED_KEY: inverted,
+            }
+    else:
+        if ctx:
+            op_dict = {
+                OP_KEY: aerospike.OP_LIST_GET_BY_INDEX_RANGE,
+                BIN_KEY: bin_name,
+                RETURN_TYPE_KEY: return_type,
+                INDEX_KEY: index,
+                INVERTED_KEY: inverted,
+                COUNT_KEY: count,
+                CTX_KEY: ctx,
+            }
+        else:
+            op_dict = {
+                OP_KEY: aerospike.OP_LIST_GET_BY_INDEX_RANGE,
+                BIN_KEY: bin_name,
+                RETURN_TYPE_KEY: return_type,
+                INDEX_KEY: index,
+                INVERTED_KEY: inverted,
+                COUNT_KEY: count,
+            }
 
     return op_dict
 
