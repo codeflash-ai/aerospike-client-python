@@ -663,17 +663,26 @@ def map_get_by_key_range(
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {
-        OP_KEY: aerospike.OP_MAP_GET_BY_KEY_RANGE,
-        BIN_KEY: bin_name,
-        KEY_KEY: key_range_start,
-        RANGE_KEY: key_range_end,
-        RETURN_TYPE_KEY: return_type,
-        INVERTED_KEY: inverted,
-    }
 
     if ctx:
-        op_dict[CTX_KEY] = ctx
+        op_dict = {
+            OP_KEY: aerospike.OP_MAP_GET_BY_KEY_RANGE,
+            BIN_KEY: bin_name,
+            KEY_KEY: key_range_start,
+            RANGE_KEY: key_range_end,
+            RETURN_TYPE_KEY: return_type,
+            INVERTED_KEY: inverted,
+            CTX_KEY: ctx,
+        }
+    else:
+        op_dict = {
+            OP_KEY: aerospike.OP_MAP_GET_BY_KEY_RANGE,
+            BIN_KEY: bin_name,
+            KEY_KEY: key_range_start,
+            RANGE_KEY: key_range_end,
+            RETURN_TYPE_KEY: return_type,
+            INVERTED_KEY: inverted,
+        }
 
     return op_dict
 
