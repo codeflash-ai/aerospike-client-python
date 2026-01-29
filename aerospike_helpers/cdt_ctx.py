@@ -299,7 +299,11 @@ def cdt_ctx_map_key_create(key: any, order: int = 0) -> _cdt_ctx:
     Returns:
         :class:`~aerospike_helpers.cdt_ctx._cdt_ctx`
     """
-    return _cdt_ctx(id=aerospike.CDT_CTX_MAP_KEY_CREATE, value=key, extra_args={CDT_CTX_ORDER_KEY: order})
+    inst = object.__new__(_cdt_ctx)
+    inst.id = aerospike.CDT_CTX_MAP_KEY_CREATE
+    inst.value = key
+    inst.extra_args = {CDT_CTX_ORDER_KEY: order}
+    return inst
 
 def cdt_ctx_all_children() -> _cdt_ctx:
     """
