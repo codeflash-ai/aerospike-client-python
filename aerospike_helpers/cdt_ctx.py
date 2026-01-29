@@ -103,6 +103,12 @@ Example::
 """
 import aerospike
 
+_INDEX_DATATYPE_MAP = {
+    aerospike.INDEX_NUMERIC: "numeric",
+    aerospike.INDEX_STRING: "string",
+    aerospike.INDEX_GEO2DSPHERE: "geo2dsphere",
+}
+
 
 def index_type_string(index_type):
     """
@@ -136,13 +142,11 @@ def index_datatype_string(index_datatype):
     Returns:
         (string) - must be one of must be one of 'numeric', 'string', 'geo2dsphere'
     """
-    if index_datatype == aerospike.INDEX_NUMERIC:
-        return "numeric"
-    if index_datatype == aerospike.INDEX_STRING:
-        return "string"
-    if index_datatype == aerospike.INDEX_GEO2DSPHERE:
-        return "geo2dsphere"
-    return "invalid"
+    try:
+        return _INDEX_DATATYPE_MAP.get(index_datatype, "invalid")
+    except TypeError:
+        # Handle unhashable types (e.g., list, dict) that cannot be dictionary keys
+        return "invalid"
 
 
 CDT_CTX_ORDER_KEY = "order_key"
