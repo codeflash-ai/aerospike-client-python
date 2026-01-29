@@ -6,6 +6,8 @@ Resources used by all expressions.
 from itertools import chain
 from typing import List, Optional, Tuple, Union, Dict, Any
 
+_EMPTY_TUPLE: Tuple[()] = ()
+
 
 class _Keys:
     VALUE_TYPE_KEY = "value_type"
@@ -193,8 +195,7 @@ class _BaseExpr(_AtomExpr):
         else:
             l = (self,)  # noqa: E741
 
-        r = []  # No right operand.
-        return _create_operator_expression(l, r, op_type)
+        return _create_operator_expression(l, _EMPTY_TUPLE, op_type)
 
     def _overload_op(self, right: "TypeAny", op_type: int):
         if self._op == op_type:
