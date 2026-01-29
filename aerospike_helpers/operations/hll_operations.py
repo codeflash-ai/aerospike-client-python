@@ -280,17 +280,21 @@ def hll_init(bin_name: str, index_bit_count=None, mh_bit_count=None, policy=None
         mh_bit_count: An optional number of min hash bits. Must be between 4 and 58 inclusive.
         policy (dict): An optional dictionary of :ref:`HyperLogLog policies <aerospike_hll_policies>`.
     """
-    op_dict = {
+    if policy:
+        return {
+            OP_KEY: aerospike.OP_HLL_INIT,
+            BIN_KEY: bin_name,
+            INDEX_BIT_COUNT_KEY: -1 if index_bit_count is None else index_bit_count,
+            MH_BIT_COUNT_KEY: -1 if mh_bit_count is None else mh_bit_count,
+            HLL_POLICY_KEY: policy
+        }
+    
+    return {
         OP_KEY: aerospike.OP_HLL_INIT,
         BIN_KEY: bin_name,
         INDEX_BIT_COUNT_KEY: -1 if index_bit_count is None else index_bit_count,
         MH_BIT_COUNT_KEY: -1 if mh_bit_count is None else mh_bit_count,
     }
-
-    if policy:
-        op_dict[HLL_POLICY_KEY] = policy
-
-    return op_dict
 
 
 def hll_refresh_count(bin_name: str):
