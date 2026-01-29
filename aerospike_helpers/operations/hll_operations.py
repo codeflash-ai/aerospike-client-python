@@ -101,6 +101,8 @@ Example::
 
 import aerospike
 
+_OP_HLL_SET_UNION = aerospike.OP_HLL_SET_UNION
+
 
 OP_KEY = "op"
 BIN_KEY = "bin"
@@ -324,9 +326,7 @@ def hll_set_union(bin_name: str, hll_list, policy=None):
         hll_list (list): The HLLs who's union will be set.
         policy (dict): An optional dictionary of :ref:`HyperLogLog policies <aerospike_hll_policies>`.
     """
-    op_dict = {OP_KEY: aerospike.OP_HLL_SET_UNION, BIN_KEY: bin_name, VALUE_LIST_KEY: hll_list}
 
     if policy:
-        op_dict[HLL_POLICY_KEY] = policy
-
-    return op_dict
+        return {OP_KEY: _OP_HLL_SET_UNION, BIN_KEY: bin_name, VALUE_LIST_KEY: hll_list, HLL_POLICY_KEY: policy}
+    return {OP_KEY: _OP_HLL_SET_UNION, BIN_KEY: bin_name, VALUE_LIST_KEY: hll_list}
