@@ -188,7 +188,12 @@ def cdt_ctx_list_rank(rank):
     Returns:
         :class:`~aerospike_helpers.cdt_ctx._cdt_ctx`
     """
-    return _cdt_ctx(id=aerospike.CDT_CTX_LIST_RANK, value=rank)
+    # Create the instance without calling __init__ to avoid function call overhead
+    inst = object.__new__(_cdt_ctx)
+    inst.id = aerospike.CDT_CTX_LIST_RANK
+    inst.value = rank
+    inst.extra_args = None
+    return inst
 
 
 def cdt_ctx_list_value(value):
