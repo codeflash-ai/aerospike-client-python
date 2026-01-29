@@ -1,6 +1,7 @@
 """
 Resources used by all expressions.
 """
+from __future__ import annotations
 
 # from __future__ import annotations
 from itertools import chain
@@ -193,7 +194,8 @@ class _BaseExpr(_AtomExpr):
         else:
             l = (self,)  # noqa: E741
 
-        r = []  # No right operand.
+        # No right operand.
+        r: TypeChildren = ()
         return _create_operator_expression(l, r, op_type)
 
     def _overload_op(self, right: "TypeAny", op_type: int):
@@ -266,7 +268,19 @@ class _BaseExpr(_AtomExpr):
 def _create_operator_expression(left_children: "TypeChildren", right_children: "TypeChildren", op_type: int):
     new_expr = _BaseExpr()
     new_expr._op = op_type
-    new_expr._children = (*left_children, *right_children)
+
+    # Avoid unnecessary tuple/list copying: if one side is empty we can reuse the other's tuple
+    # Ensure resulting _children is always a tuple, matching original behavior.
+    if not right_children:
+        new_expr._children = left_children if isinstance(left_children, tuple) else tuple(left_children)
+    elif not left_children:
+        new_expr._children = right_children if isinstance(right_children, tuple) else tuple(right_children)
+    else:
+        # Both non-empty: prefer fast tuple concatenation when possible, otherwise convert to tuple first.
+        if isinstance(left_children, tuple) and isinstance(right_children, tuple):
+            new_expr._children = left_children + right_children
+        else:
+            new_expr._children = (tuple(left_children) + tuple(right_children))
     return new_expr
 
 
