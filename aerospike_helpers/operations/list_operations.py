@@ -31,6 +31,8 @@ See this `page <https://aerospike.com/docs/develop/data-types/collections/list#l
 import aerospike
 from typing import Optional
 
+OP_LIST_GET = aerospike.OP_LIST_GET
+
 
 OP_KEY = "op"
 BIN_KEY = "bin"
@@ -390,12 +392,11 @@ def list_get(bin_name: str, index, ctx: Optional[list] = None):
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {OP_KEY: aerospike.OP_LIST_GET, BIN_KEY: bin_name, INDEX_KEY: index}
 
     if ctx:
-        op_dict[CTX_KEY] = ctx
+        return {OP_KEY: OP_LIST_GET, BIN_KEY: bin_name, INDEX_KEY: index, CTX_KEY: ctx}
 
-    return op_dict
+    return {OP_KEY: OP_LIST_GET, BIN_KEY: bin_name, INDEX_KEY: index}
 
 
 def list_get_range(bin_name: str, index, count, ctx: Optional[list] = None):
