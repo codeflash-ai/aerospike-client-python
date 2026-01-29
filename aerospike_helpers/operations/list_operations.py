@@ -438,12 +438,10 @@ def list_trim(bin_name: str, index, count, ctx: Optional[list] = None):
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {OP_KEY: aerospike.OP_LIST_TRIM, BIN_KEY: bin_name, INDEX_KEY: index, VALUE_KEY: count}
 
     if ctx:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
+        return {"op": aerospike.OP_LIST_TRIM, "bin": bin_name, "index": index, "val": count, "ctx": ctx}
+    return {"op": aerospike.OP_LIST_TRIM, "bin": bin_name, "index": index, "val": count}
 
 
 def list_size(bin_name: str, ctx: Optional[list] = None):
