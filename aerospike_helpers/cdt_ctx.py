@@ -155,9 +155,22 @@ class _cdt_ctx:
     """
 
     def __init__(self, *, id=None, value=None, extra_args=None):
-        self.id = id
-        self.value = value
-        self.extra_args = extra_args
+        # Assign all slots in one operation to reduce bytecode and speed-up.
+        self.id, self.value, self.extra_args = id, value, extra_args
+
+    @classmethod
+    def _from_id_value(cls, id, value):
+        """
+        Lightweight factory that avoids the keyword-argument overhead of __init__
+        by creating an instance via object.__new__ and setting slot attributes
+        directly. Behavior is equivalent to calling the constructor with the
+        same attribute values.
+        """
+        inst = object.__new__(cls)
+        inst.id = id
+        inst.value = value
+        inst.extra_args = None
+        return inst
 
 
 def cdt_ctx_list_index(index):
@@ -271,7 +284,7 @@ def cdt_ctx_map_key(key):
     Returns:
         :class:`~aerospike_helpers.cdt_ctx._cdt_ctx`
     """
-    return _cdt_ctx(id=aerospike.CDT_CTX_MAP_KEY, value=key)
+    return _cdt_ctx._from_id_value(aerospike.CDT_CTX_MAP_KEY, key)
 
 
 def cdt_ctx_map_value(value):
