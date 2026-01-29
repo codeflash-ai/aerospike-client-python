@@ -26,6 +26,10 @@ from typing import Optional
 
 from aerospike_helpers.cdt_ctx import _cdt_ctx
 
+_AS_OPERATOR_CDT_READ = aerospike._AS_OPERATOR_CDT_READ
+
+_CDT_FLAGS_KEY = aerospike._CDT_FLAGS_KEY
+
 
 def read(bin_name):
     """Create a read operation dictionary.
@@ -147,7 +151,7 @@ def select_by_path(bin_name: str, ctx: list[_cdt_ctx], flags: int):
     Returns:
         A dictionary to be passed to operate or operate_ordered.
     """
-    op_dict = {"op": aerospike._AS_OPERATOR_CDT_READ, "bin": bin_name, "ctx": ctx, aerospike._CDT_FLAGS_KEY: flags}
+    op_dict = {"op": _AS_OPERATOR_CDT_READ, "bin": bin_name, "ctx": ctx, _CDT_FLAGS_KEY: flags}
     return op_dict
 
 
