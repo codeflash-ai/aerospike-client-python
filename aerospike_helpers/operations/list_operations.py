@@ -1088,22 +1088,46 @@ def list_get_by_value_rank_range_relative(
             (3, 0, None) = [4,5,9,11,15]
 
     """
-    op_dict = {
-        OP_KEY: aerospike.OP_LIST_GET_BY_VALUE_RANK_RANGE_REL,
-        BIN_KEY: bin_name,
-        VALUE_KEY: value,
-        RANK_KEY: offset,
-        RETURN_TYPE_KEY: return_type,
-        INVERTED_KEY: inverted,
-    }
-
-    if count is not None:
-        op_dict[COUNT_KEY] = count
-
-    if ctx:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
+    if count is None and not ctx:
+        return {
+            OP_KEY: aerospike.OP_LIST_GET_BY_VALUE_RANK_RANGE_REL,
+            BIN_KEY: bin_name,
+            VALUE_KEY: value,
+            RANK_KEY: offset,
+            RETURN_TYPE_KEY: return_type,
+            INVERTED_KEY: inverted,
+        }
+    elif count is None:
+        return {
+            OP_KEY: aerospike.OP_LIST_GET_BY_VALUE_RANK_RANGE_REL,
+            BIN_KEY: bin_name,
+            VALUE_KEY: value,
+            RANK_KEY: offset,
+            RETURN_TYPE_KEY: return_type,
+            INVERTED_KEY: inverted,
+            CTX_KEY: ctx,
+        }
+    elif not ctx:
+        return {
+            OP_KEY: aerospike.OP_LIST_GET_BY_VALUE_RANK_RANGE_REL,
+            BIN_KEY: bin_name,
+            VALUE_KEY: value,
+            RANK_KEY: offset,
+            RETURN_TYPE_KEY: return_type,
+            INVERTED_KEY: inverted,
+            COUNT_KEY: count,
+        }
+    else:
+        return {
+            OP_KEY: aerospike.OP_LIST_GET_BY_VALUE_RANK_RANGE_REL,
+            BIN_KEY: bin_name,
+            VALUE_KEY: value,
+            RANK_KEY: offset,
+            RETURN_TYPE_KEY: return_type,
+            INVERTED_KEY: inverted,
+            COUNT_KEY: count,
+            CTX_KEY: ctx,
+        }
 
 
 def list_remove_by_value_rank_range_relative(
