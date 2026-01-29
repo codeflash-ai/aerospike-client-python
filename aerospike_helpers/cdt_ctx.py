@@ -310,7 +310,11 @@ def cdt_ctx_all_children() -> _cdt_ctx:
     Returns:
         :class:`~aerospike_helpers.cdt_ctx._cdt_ctx`
     """
-    return _cdt_ctx(id=aerospike._AS_CDT_CTX_EXP)
+    obj = object.__new__(_cdt_ctx)
+    obj.id = aerospike._AS_CDT_CTX_EXP
+    obj.value = None
+    obj.extra_args = None
+    return obj
 
 def cdt_ctx_all_children_with_filter(expression: "TypeExpression") -> _cdt_ctx:
     """
