@@ -187,6 +187,10 @@ def list_insert_items(bin_name: str, index, values, policy: Optional[dict] = Non
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`.
         The format of the dictionary should be considered an internal detail, and subject to change.
     """
+    # Fast path: if no optional values supplied, build and return the small dict immediately.
+    if not policy and not ctx:
+        return {OP_KEY: aerospike.OP_LIST_INSERT_ITEMS, BIN_KEY: bin_name, INDEX_KEY: index, VALUE_KEY: values}
+
     op_dict = {OP_KEY: aerospike.OP_LIST_INSERT_ITEMS, BIN_KEY: bin_name, INDEX_KEY: index, VALUE_KEY: values}
 
     if policy:
