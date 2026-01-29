@@ -33,6 +33,8 @@ import aerospike
 import sys
 from typing import Optional
 
+_OP_MAP_REMOVE_BY_VALUE = aerospike.OP_MAP_REMOVE_BY_VALUE
+
 OP_KEY = "op"
 BIN_KEY = "bin"
 POLICY_KEY = "map_policy"
@@ -385,7 +387,7 @@ def map_remove_by_value(bin_name: str, value, return_type, inverted=False, ctx: 
         format of the dictionary should be considered an internal detail, and subject to change.
     """
     op_dict = {
-        OP_KEY: aerospike.OP_MAP_REMOVE_BY_VALUE,
+        OP_KEY: _OP_MAP_REMOVE_BY_VALUE,
         BIN_KEY: bin_name,
         VALUE_KEY: value,
         RETURN_TYPE_KEY: return_type,
