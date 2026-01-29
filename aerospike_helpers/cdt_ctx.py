@@ -103,6 +103,8 @@ Example::
 """
 import aerospike
 
+_CDT_CTX_LIST_INDEX = aerospike.CDT_CTX_LIST_INDEX
+
 
 def index_type_string(index_type):
     """
@@ -173,7 +175,7 @@ def cdt_ctx_list_index(index):
     Returns:
         :class:`~aerospike_helpers.cdt_ctx._cdt_ctx`
     """
-    return _cdt_ctx(id=aerospike.CDT_CTX_LIST_INDEX, value=index)
+    return _cdt_ctx(id=_CDT_CTX_LIST_INDEX, value=index)
 
 
 def cdt_ctx_list_rank(rank):
