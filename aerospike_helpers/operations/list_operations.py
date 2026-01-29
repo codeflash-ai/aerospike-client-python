@@ -31,6 +31,8 @@ See this `page <https://aerospike.com/docs/develop/data-types/collections/list#l
 import aerospike
 from typing import Optional
 
+_OP_LIST_REMOVE_BY_RANK = aerospike.OP_LIST_REMOVE_BY_RANK
+
 
 OP_KEY = "op"
 BIN_KEY = "bin"
@@ -818,7 +820,7 @@ def list_remove_by_rank(bin_name: str, rank, return_type, ctx: Optional[list] = 
         format of the dictionary should be considered an internal detail, and subject to change.
     """
     op_dict = {
-        OP_KEY: aerospike.OP_LIST_REMOVE_BY_RANK,
+        OP_KEY: _OP_LIST_REMOVE_BY_RANK,
         BIN_KEY: bin_name,
         RETURN_TYPE_KEY: return_type,
         RANK_KEY: rank,
