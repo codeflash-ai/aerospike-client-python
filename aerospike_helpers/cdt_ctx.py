@@ -160,6 +160,21 @@ class _cdt_ctx:
         self.extra_args = extra_args
 
 
+
+    @classmethod
+    def _fast_new(cls, id, value, extra_args=None):
+        """
+        Fast factory that creates an instance without invoking __init__ to
+        reduce per-instance overhead on common call paths. It sets the same
+        attributes as __init__ so behavior is identical.
+        """
+        obj = object.__new__(cls)
+        obj.id = id
+        obj.value = value
+        obj.extra_args = extra_args
+        return obj
+
+
 def cdt_ctx_list_index(index):
     """
     Creates a nested cdt_ctx object to lookup an object in a list by index.
@@ -173,7 +188,7 @@ def cdt_ctx_list_index(index):
     Returns:
         :class:`~aerospike_helpers.cdt_ctx._cdt_ctx`
     """
-    return _cdt_ctx(id=aerospike.CDT_CTX_LIST_INDEX, value=index)
+    return _cdt_ctx._fast_new(aerospike.CDT_CTX_LIST_INDEX, index)
 
 
 def cdt_ctx_list_rank(rank):
