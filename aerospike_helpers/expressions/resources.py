@@ -1,6 +1,7 @@
 """
 Resources used by all expressions.
 """
+from __future__ import annotations
 
 # from __future__ import annotations
 from itertools import chain
@@ -266,7 +267,7 @@ class _BaseExpr(_AtomExpr):
 def _create_operator_expression(left_children: "TypeChildren", right_children: "TypeChildren", op_type: int):
     new_expr = _BaseExpr()
     new_expr._op = op_type
-    new_expr._children = (*left_children, *right_children)
+    new_expr._children = left_children + right_children
     return new_expr
 
 
