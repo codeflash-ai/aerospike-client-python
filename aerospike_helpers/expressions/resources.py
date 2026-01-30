@@ -193,7 +193,7 @@ class _BaseExpr(_AtomExpr):
         else:
             l = (self,)  # noqa: E741
 
-        r = []  # No right operand.
+        r = ()  # No right operand.
         return _create_operator_expression(l, r, op_type)
 
     def _overload_op(self, right: "TypeAny", op_type: int):
@@ -266,7 +266,7 @@ class _BaseExpr(_AtomExpr):
 def _create_operator_expression(left_children: "TypeChildren", right_children: "TypeChildren", op_type: int):
     new_expr = _BaseExpr()
     new_expr._op = op_type
-    new_expr._children = (*left_children, *right_children)
+    new_expr._children = left_children + right_children
     return new_expr
 
 
