@@ -31,6 +31,8 @@ See this `page <https://aerospike.com/docs/develop/data-types/collections/list#l
 import aerospike
 from typing import Optional
 
+_OP_LIST_POP_RANGE = aerospike.OP_LIST_POP_RANGE
+
 
 OP_KEY = "op"
 BIN_KEY = "bin"
@@ -268,12 +270,11 @@ def list_pop_range(bin_name: str, index, count, ctx: Optional[list] = None):
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {OP_KEY: aerospike.OP_LIST_POP_RANGE, BIN_KEY: bin_name, INDEX_KEY: index, VALUE_KEY: count}
 
     if ctx:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
+        return {OP_KEY: _OP_LIST_POP_RANGE, BIN_KEY: bin_name, INDEX_KEY: index, VALUE_KEY: count, CTX_KEY: ctx}
+    
+    return {OP_KEY: _OP_LIST_POP_RANGE, BIN_KEY: bin_name, INDEX_KEY: index, VALUE_KEY: count}
 
 
 def list_remove(bin_name: str, index, ctx: Optional[list] = None):
