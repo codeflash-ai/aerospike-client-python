@@ -889,18 +889,23 @@ def list_remove_by_value(bin_name: str, value, return_type, inverted=False, ctx:
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`.The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {
+    if ctx:
+        return {
+            OP_KEY: aerospike.OP_LIST_REMOVE_BY_VALUE,
+            BIN_KEY: bin_name,
+            RETURN_TYPE_KEY: return_type,
+            VALUE_KEY: value,
+            INVERTED_KEY: inverted,
+            CTX_KEY: ctx,
+        }
+
+    return {
         OP_KEY: aerospike.OP_LIST_REMOVE_BY_VALUE,
         BIN_KEY: bin_name,
         RETURN_TYPE_KEY: return_type,
         VALUE_KEY: value,
         INVERTED_KEY: inverted,
     }
-
-    if ctx:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
 
 
 def list_remove_by_value_list(bin_name: str, value_list, return_type, inverted=False, ctx: Optional[list] = None):
