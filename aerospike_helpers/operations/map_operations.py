@@ -416,18 +416,23 @@ def map_remove_by_value_list(bin_name: str, value_list, return_type, inverted=Fa
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {
+    if ctx is None:
+        return {
+            OP_KEY: aerospike.OP_MAP_REMOVE_BY_VALUE_LIST,
+            BIN_KEY: bin_name,
+            VALUE_KEY: value_list,
+            RETURN_TYPE_KEY: return_type,
+            INVERTED_KEY: inverted,
+        }
+
+    return {
         OP_KEY: aerospike.OP_MAP_REMOVE_BY_VALUE_LIST,
         BIN_KEY: bin_name,
         VALUE_KEY: value_list,
         RETURN_TYPE_KEY: return_type,
         INVERTED_KEY: inverted,
+        CTX_KEY: ctx,
     }
-
-    if ctx is not None:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
 
 
 def map_remove_by_value_range(
