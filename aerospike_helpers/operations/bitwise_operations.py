@@ -139,6 +139,8 @@ Example::
 """
 import aerospike
 
+_BIT_LSCAN_OP = aerospike.OP_BIT_LSCAN
+
 BIN_KEY = "bin"
 BYTE_SIZE_KEY = "byte_size"
 BYTE_OFFSET_KEY = "byte_offset"
@@ -428,7 +430,7 @@ def bit_lscan(bin_name: str, bit_offset, bit_size, value):
         format of the dictionary should be considered an internal detail, and subject to change.
     """
     return {
-        OP_KEY: aerospike.OP_BIT_LSCAN,
+        OP_KEY: _BIT_LSCAN_OP,
         BIN_KEY: bin_name,
         BIT_OFFSET_KEY: bit_offset,
         BIT_SIZE_KEY: bit_size,
