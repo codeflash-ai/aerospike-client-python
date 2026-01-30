@@ -33,6 +33,8 @@ import aerospike
 import sys
 from typing import Optional
 
+_SHOULD_SORT_DICT = sys.version_info[0] == 3 and sys.version_info[1] >= 6
+
 OP_KEY = "op"
 BIN_KEY = "bin"
 POLICY_KEY = "map_policy"
@@ -148,14 +150,6 @@ def map_put_items(bin_name: str, item_dict, map_policy: Optional[dict] = None, c
         format of the dictionary should be considered an internal detail, and subject to change.
     """
 
-    def sortKeys(d):
-        try:
-            if sys.version_info[0] == 3 and sys.version_info[1] >= 6:
-                return dict(sorted(d.items()))
-        except Exception:
-            pass
-        return d
-
     op_dict = {
         OP_KEY: aerospike.OP_MAP_PUT_ITEMS,
         BIN_KEY: bin_name,
@@ -164,7 +158,12 @@ def map_put_items(bin_name: str, item_dict, map_policy: Optional[dict] = None, c
     if map_policy is not None:
         op_dict[POLICY_KEY] = map_policy
 
-    item_dict = sortKeys(item_dict)
+    if _SHOULD_SORT_DICT:
+        try:
+            item_dict = dict(sorted(item_dict.items()))
+        except Exception:
+            pass
+
     op_dict[VALUE_KEY] = item_dict
 
     if ctx is not None:
