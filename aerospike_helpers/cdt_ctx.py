@@ -103,6 +103,10 @@ Example::
 """
 import aerospike
 
+_CDT_CTX_FILTER_EXPR_KEY = aerospike._CDT_CTX_FILTER_EXPR_KEY
+
+_AS_CDT_CTX_EXP = aerospike._AS_CDT_CTX_EXP
+
 
 def index_type_string(index_type):
     """
@@ -325,4 +329,4 @@ def cdt_ctx_all_children_with_filter(expression: "TypeExpression") -> _cdt_ctx:
     Returns:
         :class:`~aerospike_helpers.cdt_ctx._cdt_ctx`
     """
-    return _cdt_ctx(id=aerospike._AS_CDT_CTX_EXP, extra_args={aerospike._CDT_CTX_FILTER_EXPR_KEY: expression})
+    return _cdt_ctx(id=_AS_CDT_CTX_EXP, extra_args={_CDT_CTX_FILTER_EXPR_KEY: expression})
