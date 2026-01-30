@@ -101,6 +101,8 @@ Example::
 
 import aerospike
 
+_OP_HLL_GET_UNION_COUNT = aerospike.OP_HLL_GET_UNION_COUNT
+
 
 OP_KEY = "op"
 BIN_KEY = "bin"
@@ -257,9 +259,7 @@ def hll_get_union_count(bin_name: str, hll_list):
         bin_name (str): The name of the bin to be operated on.
         hll_list (list): The HLLs to be unioned.
     """
-    op_dict = {OP_KEY: aerospike.OP_HLL_GET_UNION_COUNT, BIN_KEY: bin_name, VALUE_LIST_KEY: hll_list}
-
-    return op_dict
+    return {OP_KEY: _OP_HLL_GET_UNION_COUNT, BIN_KEY: bin_name, VALUE_LIST_KEY: hll_list}
 
 
 def hll_init(bin_name: str, index_bit_count=None, mh_bit_count=None, policy=None):
