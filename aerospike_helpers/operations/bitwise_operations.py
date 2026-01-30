@@ -139,6 +139,8 @@ Example::
 """
 import aerospike
 
+_OP_BIT_INSERT = aerospike.OP_BIT_INSERT
+
 BIN_KEY = "bin"
 BYTE_SIZE_KEY = "byte_size"
 BYTE_OFFSET_KEY = "byte_offset"
@@ -401,7 +403,7 @@ def bit_insert(bin_name: str, byte_offset, value_byte_size, value, policy=None):
         format of the dictionary should be considered an internal detail, and subject to change.
     """
     return {
-        OP_KEY: aerospike.OP_BIT_INSERT,
+        OP_KEY: _OP_BIT_INSERT,
         BIN_KEY: bin_name,
         BYTE_OFFSET_KEY: byte_offset,
         VALUE_BYTE_SIZE_KEY: value_byte_size,
