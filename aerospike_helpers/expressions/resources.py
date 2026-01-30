@@ -222,10 +222,15 @@ class _BaseExpr(_AtomExpr):
 
         if isinstance(right, _BaseExpr) and right._op == op_type:
             r = right._children[:-1]
+            new_expr = _BaseExpr()
+            new_expr._op = op_type
+            new_expr._children = l + r + (expr_end,)
+            return new_expr
         else:
-            r = (right,)
-
-        return _create_operator_expression(l, r + (expr_end,), op_type)
+            new_expr = _BaseExpr()
+            new_expr._op = op_type
+            new_expr._children = l + (right, expr_end)
+            return new_expr
 
     # unary operators
 
