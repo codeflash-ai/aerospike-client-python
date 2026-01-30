@@ -33,6 +33,8 @@ import aerospike
 import sys
 from typing import Optional
 
+_OP_MAP_REMOVE_BY_KEY = aerospike.OP_MAP_REMOVE_BY_KEY
+
 OP_KEY = "op"
 BIN_KEY = "bin"
 POLICY_KEY = "map_policy"
@@ -289,7 +291,9 @@ def map_remove_by_key(bin_name: str, key, return_type, ctx: Optional[list] = Non
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {OP_KEY: aerospike.OP_MAP_REMOVE_BY_KEY, BIN_KEY: bin_name, KEY_KEY: key, RETURN_TYPE_KEY: return_type}
+    # Build the base operation dict with all required keys.
+    op_dict = {OP_KEY: _OP_MAP_REMOVE_BY_KEY, BIN_KEY: bin_name, KEY_KEY: key, RETURN_TYPE_KEY: return_type}
+
 
     if ctx is not None:
         op_dict[CTX_KEY] = ctx
