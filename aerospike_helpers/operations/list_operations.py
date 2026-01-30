@@ -292,12 +292,10 @@ def list_remove(bin_name: str, index, ctx: Optional[list] = None):
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {OP_KEY: aerospike.OP_LIST_REMOVE, BIN_KEY: bin_name, INDEX_KEY: index}
 
     if ctx:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
+        return {"op": aerospike.OP_LIST_REMOVE, "bin": bin_name, "index": index, "ctx": ctx}
+    return {"op": aerospike.OP_LIST_REMOVE, "bin": bin_name, "index": index}
 
 
 def list_remove_range(bin_name: str, index, count, ctx: Optional[list] = None):
