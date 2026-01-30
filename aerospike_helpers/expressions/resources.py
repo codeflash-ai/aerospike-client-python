@@ -253,8 +253,8 @@ class _BaseExpr(_AtomExpr):
         return self._overload_op_va_args(right, _ExprOp.DIV)
 
     def __floordiv__(self, right: "TypeAny"):
-        div_expr = self.__truediv__(right)
-        return div_expr.__floor__()
+        # Directly chain the operations to avoid intermediate expression creation
+        return self._overload_op_va_args(right, _ExprOp.DIV)._overload_op_unary(_ExprOp.FLOOR)
 
     def __pow__(self, right: "TypeAny"):
         return self._overload_op(right, _ExprOp.POW)
