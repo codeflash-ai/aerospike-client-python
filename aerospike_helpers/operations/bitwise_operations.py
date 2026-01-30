@@ -139,6 +139,10 @@ Example::
 """
 import aerospike
 
+_BIT_RESIZE_BASE = {
+    "op": aerospike.OP_BIT_RESIZE,
+}
+
 BIN_KEY = "bin"
 BYTE_SIZE_KEY = "byte_size"
 BYTE_OFFSET_KEY = "byte_offset"
@@ -174,13 +178,12 @@ def bit_resize(bin_name: str, byte_size, policy=None, resize_flags: int = 0):
         A dictionary usable in operate or operate_ordered. The format of the dictionary
         should be considered an internal detail, and subject to change.
     """
-    return {
-        OP_KEY: aerospike.OP_BIT_RESIZE,
-        BIN_KEY: bin_name,
-        POLICY_KEY: policy,
-        RESIZE_FLAGS_KEY: resize_flags,
-        BYTE_SIZE_KEY: byte_size,
-    }
+    result = _BIT_RESIZE_BASE.copy()
+    result["bin"] = bin_name
+    result["policy"] = policy
+    result["resize_flags"] = resize_flags
+    result["byte_size"] = byte_size
+    return result
 
 
 def bit_remove(bin_name: str, byte_offset, byte_size, policy=None):
