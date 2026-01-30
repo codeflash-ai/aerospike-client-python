@@ -460,12 +460,11 @@ def list_size(bin_name: str, ctx: Optional[list] = None):
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {OP_KEY: aerospike.OP_LIST_SIZE, BIN_KEY: bin_name}
 
     if ctx:
-        op_dict[CTX_KEY] = ctx
+        return {OP_KEY: aerospike.OP_LIST_SIZE, BIN_KEY: bin_name, CTX_KEY: ctx}
 
-    return op_dict
+    return {OP_KEY: aerospike.OP_LIST_SIZE, BIN_KEY: bin_name}
 
 
 # Post 3.4.0 Operations. Require Server >= 3.16.0.1
