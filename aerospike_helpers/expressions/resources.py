@@ -221,11 +221,12 @@ class _BaseExpr(_AtomExpr):
             l = (self,)  # noqa: E741
 
         if isinstance(right, _BaseExpr) and right._op == op_type:
-            r = right._children[:-1]
+            # Build right children including expr_end in a single tuple allocation
+            r = right._children[:-1] + (expr_end,)
         else:
-            r = (right,)
+            r = (right, expr_end)
 
-        return _create_operator_expression(l, r + (expr_end,), op_type)
+        return _create_operator_expression(l, r, op_type)
 
     # unary operators
 
