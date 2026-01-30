@@ -339,12 +339,11 @@ def list_clear(bin_name: str, ctx: Optional[list] = None):
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {OP_KEY: aerospike.OP_LIST_CLEAR, BIN_KEY: bin_name}
 
     if ctx:
-        op_dict[CTX_KEY] = ctx
+        return {OP_KEY: aerospike.OP_LIST_CLEAR, BIN_KEY: bin_name, CTX_KEY: ctx}
 
-    return op_dict
+    return {OP_KEY: aerospike.OP_LIST_CLEAR, BIN_KEY: bin_name}
 
 
 def list_set(bin_name: str, index, value, policy: Optional[dict] = None, ctx: Optional[list] = None):
