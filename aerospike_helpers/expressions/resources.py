@@ -193,8 +193,10 @@ class _BaseExpr(_AtomExpr):
         else:
             l = (self,)  # noqa: E741
 
-        r = []  # No right operand.
-        return _create_operator_expression(l, r, op_type)
+        new_expr = _BaseExpr()
+        new_expr._op = op_type
+        new_expr._children = l
+        return new_expr
 
     def _overload_op(self, right: "TypeAny", op_type: int):
         if self._op == op_type:
