@@ -33,6 +33,8 @@ import aerospike
 import sys
 from typing import Optional
 
+_OP_MAP_REMOVE = aerospike.OP_MAP_REMOVE_BY_INDEX_RANGE
+
 OP_KEY = "op"
 BIN_KEY = "bin"
 POLICY_KEY = "map_policy"
@@ -527,19 +529,25 @@ def map_remove_by_index_range(
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {
-        OP_KEY: aerospike.OP_MAP_REMOVE_BY_INDEX_RANGE,
+    if ctx is not None:
+        return {
+            OP_KEY: _OP_MAP_REMOVE,
+            BIN_KEY: bin_name,
+            INDEX_KEY: index_start,
+            VALUE_KEY: remove_amt,
+            RETURN_TYPE_KEY: return_type,
+            INVERTED_KEY: inverted,
+            CTX_KEY: ctx,
+        }
+    
+    return {
+        OP_KEY: _OP_MAP_REMOVE,
         BIN_KEY: bin_name,
         INDEX_KEY: index_start,
         VALUE_KEY: remove_amt,
         RETURN_TYPE_KEY: return_type,
         INVERTED_KEY: inverted,
     }
-
-    if ctx is not None:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
 
 
 def map_remove_by_rank(bin_name: str, rank, return_type, ctx: Optional[list] = None):
