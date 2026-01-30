@@ -198,16 +198,20 @@ class _BaseExpr(_AtomExpr):
 
     def _overload_op(self, right: "TypeAny", op_type: int):
         if self._op == op_type:
-            l = self._children  # noqa: E741
+            if isinstance(right, _BaseExpr) and right._op == op_type:
+                children = self._children + right._children
+            else:
+                children = self._children + (right,)
         else:
-            l = (self,)  # noqa: E741
+            if isinstance(right, _BaseExpr) and right._op == op_type:
+                children = (self,) + right._children
+            else:
+                children = (self, right)
 
-        if isinstance(right, _BaseExpr) and right._op == op_type:
-            r = right._children
-        else:
-            r = (right,)
-
-        return _create_operator_expression(l, r, op_type)
+        new_expr = _BaseExpr()
+        new_expr._op = op_type
+        new_expr._children = children
+        return new_expr
 
     def _overload_op_va_args(self, right: "TypeAny", op_type: int):
         expr_end = _BaseExpr()
