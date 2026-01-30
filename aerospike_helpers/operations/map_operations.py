@@ -33,6 +33,8 @@ import aerospike
 import sys
 from typing import Optional
 
+OP_MAP_GET_BY_KEY_RANGE = aerospike.OP_MAP_GET_BY_KEY_RANGE
+
 OP_KEY = "op"
 BIN_KEY = "bin"
 POLICY_KEY = "map_policy"
@@ -664,7 +666,7 @@ def map_get_by_key_range(
         format of the dictionary should be considered an internal detail, and subject to change.
     """
     op_dict = {
-        OP_KEY: aerospike.OP_MAP_GET_BY_KEY_RANGE,
+        OP_KEY: OP_MAP_GET_BY_KEY_RANGE,
         BIN_KEY: bin_name,
         KEY_KEY: key_range_start,
         RANGE_KEY: key_range_end,
