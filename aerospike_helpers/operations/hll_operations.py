@@ -172,9 +172,7 @@ def hll_fold(bin_name: str, index_bit_count):
         bin_name (str): The name of the bin to be operated on.
         index_bit_count: number of index bits. Must be between 4 and 16 inclusive.
     """
-    op_dict = {OP_KEY: aerospike.OP_HLL_FOLD, BIN_KEY: bin_name, INDEX_BIT_COUNT_KEY: index_bit_count}
-
-    return op_dict
+    return {OP_KEY: aerospike.OP_HLL_FOLD, BIN_KEY: bin_name, INDEX_BIT_COUNT_KEY: index_bit_count}
 
 
 def hll_get_count(bin_name):
