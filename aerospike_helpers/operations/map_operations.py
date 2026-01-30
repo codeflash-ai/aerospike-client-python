@@ -897,12 +897,22 @@ def map_get_by_rank(bin_name: str, rank, return_type, ctx: Optional[list] = None
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {OP_KEY: aerospike.OP_MAP_GET_BY_RANK, BIN_KEY: bin_name, INDEX_KEY: rank, RETURN_TYPE_KEY: return_type}
 
     if ctx:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
+        return {
+            "op": aerospike.OP_MAP_GET_BY_RANK,
+            "bin": bin_name,
+            "index": rank,
+            "return_type": return_type,
+            "ctx": ctx
+        }
+    
+    return {
+        "op": aerospike.OP_MAP_GET_BY_RANK,
+        "bin": bin_name,
+        "index": rank,
+        "return_type": return_type
+    }
 
 
 def map_get_by_rank_range(bin_name: str, rank_start, get_amt, return_type, inverted=False, ctx: Optional[list] = None):
