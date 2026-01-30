@@ -64,12 +64,10 @@ def map_set_policy(bin_name: str, policy, ctx: Optional[list] = None):
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {OP_KEY: aerospike.OP_MAP_SET_POLICY, BIN_KEY: bin_name, POLICY_KEY: policy}
-
-    if ctx is not None:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
+    if ctx is None:
+        return {OP_KEY: aerospike.OP_MAP_SET_POLICY, BIN_KEY: bin_name, POLICY_KEY: policy}
+    else:
+        return {OP_KEY: aerospike.OP_MAP_SET_POLICY, BIN_KEY: bin_name, POLICY_KEY: policy, CTX_KEY: ctx}
 
 
 def map_create(bin_name: str, map_order: int, persist_index: bool, ctx: Optional[list] = None):
