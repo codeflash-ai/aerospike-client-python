@@ -191,8 +191,9 @@ def list_insert_items(bin_name: str, index, values, policy: Optional[dict] = Non
 
     if policy:
         op_dict[LIST_POLICY_KEY] = policy
-
-    if ctx:
+        if ctx:
+            op_dict[CTX_KEY] = ctx
+    elif ctx:
         op_dict[CTX_KEY] = ctx
 
     return op_dict
