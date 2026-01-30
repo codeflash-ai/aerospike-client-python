@@ -489,17 +489,21 @@ def list_get_by_index(bin_name: str, index, return_type, ctx: Optional[list] = N
         A dictionary usable in :meth:`~aerospike.Client.operate` and :meth:`~aerospike.Client.operate_ordered`. The
         format of the dictionary should be considered an internal detail, and subject to change.
     """
-    op_dict = {
+    if ctx:
+        return {
+            OP_KEY: aerospike.OP_LIST_GET_BY_INDEX,
+            BIN_KEY: bin_name,
+            RETURN_TYPE_KEY: return_type,
+            INDEX_KEY: index,
+            CTX_KEY: ctx,
+        }
+    
+    return {
         OP_KEY: aerospike.OP_LIST_GET_BY_INDEX,
         BIN_KEY: bin_name,
         RETURN_TYPE_KEY: return_type,
         INDEX_KEY: index,
     }
-
-    if ctx:
-        op_dict[CTX_KEY] = ctx
-
-    return op_dict
 
 
 def list_get_by_index_range(bin_name: str, index, return_type, count=None, inverted=False, ctx: Optional[list] = None):
