@@ -225,7 +225,10 @@ class _BaseExpr(_AtomExpr):
         else:
             r = (right,)
 
-        return _create_operator_expression(l, r + (expr_end,), op_type)
+        new_expr = _BaseExpr()
+        new_expr._op = op_type
+        new_expr._children = (*l, *r, expr_end)
+        return new_expr
 
     # unary operators
 
